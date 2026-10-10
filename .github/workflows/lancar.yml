@@ -1,0 +1,32 @@
+# Publica uma versão nova: junta as partes dos instaladores (branch "lancar") e cria a Release.
+name: Publicar versão
+on:
+  push:
+    branches: [lancar]
+permissions:
+  contents: write
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: lancar
+      - name: Juntar partes e publicar
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          VERSAO=$(cat lancar/VERSAO)
+          mkdir -p saida
+          for base in $(ls lancar | grep '\.parte' | sed 's/\.parte[0-9]*$//' | sort -u); do
+            cat $(ls lancar/$base.parte* | sort -V) > saida/$base
+          done
+          ls -la saida
+          NOTAS="$(cat lancar/NOTAS 2>/dev/null || echo "Universa $VERSAO")"
+          if gh release view "v$VERSAO" >/dev/null 2>&1; then
+            gh release upload "v$VERSAO" saida/* --clobber
+          else
+            gh release create "v$VERSAO" saida/* --title "Universa $VERSAO" --notes "$NOTAS" --latest
+          fi
+          git push origin --delete lancar || true
