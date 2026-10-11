@@ -1,4 +1,4 @@
-# Universa
+# UniversaApp
 
 Proyección para iglesias — letras, Biblia, videos y control desde el iPad.
 
