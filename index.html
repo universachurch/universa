@@ -38,6 +38,17 @@
     --gold: #4fb8ff; --gold-soft: #16204a; --night: #050818; --night-ink: #eef0f8; --live: #ff4d5e; color-scheme: dark;
   }
   * { box-sizing: border-box; }
+  .real-ipad { margin: 0; }
+  .marco-ipad { background: #0b0d14; border-radius: 26px; padding: 14px; box-shadow: 0 30px 60px rgba(10,12,40,.30); border: 1px solid #23263a; }
+  .marco-ipad img, .reales img { display: block; width: 100%; height: auto; border-radius: 12px; }
+  .real-ipad figcaption, .reales figcaption { margin-top: 10px; font-size: 13px; color: var(--muted); text-align: center; }
+  .reales { display: grid; grid-template-columns: 1.4fr 1fr; gap: 22px; align-items: start; }
+  .reales figure { margin: 0; }
+  .reales .marco { background: #0b0d14; border-radius: 14px; padding: 8px; border: 1px solid #23263a; box-shadow: 0 18px 40px rgba(10,12,40,.22); }
+  .confianza { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 22px; font-size: 14.5px; color: var(--ink); }
+  .confianza span::before { content: "✓ "; color: var(--gold); font-weight: 800; }
+  @media (max-width: 760px) { .reales { grid-template-columns: 1fr; } .marco-ipad { padding: 8px; border-radius: 16px; } }
+
   /* ===== demo animada: pastor en el púlpito + operador ===== */
   .demo { position: relative; display: flex; flex-direction: column; gap: 14px; }
   .d-pantalla { aspect-ratio: 16 / 9; border-radius: 16px; background: radial-gradient(120% 90% at 30% 10%, #1c2a7a 0%, var(--night) 62%); color: var(--night-ink); position: relative; display: grid; place-items: center; text-align: center; padding: 6%; border: 3px solid #0a0c18; box-shadow: 0 30px 60px rgba(10,12,40,.35); overflow: hidden; transition: background .8s; }
@@ -222,30 +233,10 @@
       <p class="nota">En preparación para Mac y Windows, con control desde iPad, iPhone y Android.</p>
     </div>
 
-    <div class="demo" aria-label="Animación: el pastor toca el iPad en el púlpito y la pantalla de la iglesia cambia; el operador ve lo mismo en la computadora">
-      <div class="d-pantalla">
-        <span class="aire">EN VIVO</span>
-        <div class="d-cont" id="dCont"></div>
-      </div>
-      <div class="d-abajo">
-        <div class="d-pulpito">
-          <div class="d-pastor" aria-hidden="true"><i class="cab"></i><i class="cuerpo"></i></div>
-          <div class="d-ipad">
-            <small>iPad del pastor</small>
-            <div class="d-bt" id="dBt">▶ Parte siguiente</div>
-            <i class="d-dedo" id="dDedo"></i>
-          </div>
-          <div class="d-atril"><b>Púlpito</b></div>
-          <div class="d-voz" id="dVoz"></div>
-        </div>
-        <div class="d-pc">
-          <div class="d-lap"><div class="d-mini" id="dMini"></div></div>
-          <div class="d-base"></div>
-          <small>Operador en la PC o Mac<br><span>si lo tiene · ve lo mismo</span></small>
-        </div>
-      </div>
-      <p class="d-caption" id="dCap"></p>
-    </div>
+    <figure class="real-ipad">
+      <div class="marco-ipad"><img src="img/ipad.jpg" width="1180" height="793" alt="Pantalla real de UniversaApp en el iPad del pastor: lo que está en la pantalla, botón Parte del culto, Orar, atajos y el orden del culto"></div>
+      <figcaption>Captura real de UniversaApp en la pantalla del iPad del pastor.</figcaption>
+    </figure>
   </header>
 
   <div class="franja">
@@ -254,6 +245,19 @@
     <div><b>23</b><span>Biblias libres incluidas</span></div>
     <div><b>Sin internet</b><span>la pantalla funciona igual</span></div>
   </div>
+
+  <section id="real">
+    <div class="titulo">
+      <p class="eyebrow">Así se ve de verdad</p>
+      <h2>Capturas del programa, sin retoques.</h2>
+      <p>A la izquierda, la computadora de la iglesia. A la derecha, lo que ve la congregación. El pastor maneja las dos desde el iPad.</p>
+    </div>
+    <div class="reales">
+      <figure><div class="marco"><img src="img/computadora.jpg" width="1440" height="900" loading="lazy" alt="Pantalla real de UniversaApp en la computadora: lista del culto, canciones, vista previa y al aire"></div><figcaption>La computadora: lista del culto, vista previa y lo que está al aire.</figcaption></figure>
+      <figure><div class="marco"><img src="img/pantalla.jpg" width="1280" height="720" loading="lazy" alt="Lo que ve la congregación en la pantalla: la letra del himno"></div><figcaption>La pantalla de la iglesia: lo que ve la congregación.</figcaption></figure>
+    </div>
+    <div class="confianza"><span>Sin cuenta y sin tarjeta</span><span>No pedimos datos personales</span><span>Sus canciones quedan en su computadora</span><span>Funciona sin internet</span></div>
+  </section>
 
   <section id="pastor">
     <div class="titulo">
@@ -397,45 +401,7 @@
   </footer>
 </div>
 
-<script>
-  // Escena: el pastor toca el iPad en el púlpito y la pantalla cambia; el operador ve lo mismo.
-  (() => {
-    const $ = (id) => document.getElementById(id);
-    const pasos = [
-      { bt: '▶ Parte siguiente', tela: '<h4>Santo, santo, santo</h4><p>Señor omnipotente</p><div class="d-notas">♪ ♫ ♪</div>', mini: 'Santo, santo, santo', cap: 'Un toque: <em>entra la alabanza</em> con su pista y la letra sigue la música sola.' },
-      { bt: '🙏 Orar', tela: '<div class="d-notas" style="font-size:26px">🙏</div><p>Fondo de oración</p>', mini: '🙏', ora: true, cap: 'Un toque: <em>fondo de oración</em> que entra bajito. Otro toque y se apaga suave.' },
-      { voz: '"…abran sus Biblias en <b>Juan 3:16</b>"', tela: '<h4>Juan 3:16</h4><p>Porque de tal manera amó Dios al mundo…</p>', mini: 'Juan 3:16', cap: 'Usted cita el versículo: <em>aparece solo</em>. Sin tocar nada.' },
-      { bt: '⚡ Santa Cena', tela: '<h4>Santa Cena</h4><p>♪ música suave de fondo</p>', mini: 'Santa Cena', cap: 'Un atajo: <em>texto en pantalla y música</em> al mismo tiempo.' },
-    ];
-    let i = -1;
-    const mostrar = (p) => {
-      $('dCont').classList.add('fora');
-      setTimeout(() => {
-        $('dCont').innerHTML = p.tela; $('dCont').classList.remove('fora');
-        $('dMini').textContent = p.mini;
-        document.querySelector('.d-pantalla').classList.toggle('oracion', !!p.ora);
-        $('dMini').classList.toggle('oracion', !!p.ora);
-      }, 420);
-      $('dCap').innerHTML = p.cap;
-    };
-    const tick = () => {
-      i = (i + 1) % pasos.length;
-      const p = pasos[i];
-      $('dVoz').classList.remove('ve');
-      if (p.voz) {
-        $('dVoz').innerHTML = p.voz; $('dVoz').classList.add('ve');
-        setTimeout(() => mostrar(p), 1200);
-      } else {
-        $('dBt').textContent = p.bt;
-        setTimeout(() => { $('dBt').classList.add('toca'); $('dDedo').classList.remove('toca'); void $('dDedo').offsetWidth; $('dDedo').classList.add('toca'); }, 600);
-        setTimeout(() => { $('dBt').classList.remove('toca'); mostrar(p); }, 800);
-      }
-    };
-    tick();
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    setInterval(tick, 4200);
-  })();
-</script>
+
 
 
 </body>
