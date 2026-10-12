@@ -28,7 +28,7 @@
 // El link es: ir.html#CANAL.CLAVE  — lo de después de # nunca sale del iPad hacia este sitio.
 // 1) lee en el canal secreto la dirección actual de la computadora  2) entra con la clave.
 (async function ir() {
-  const [canal, clave] = (location.hash.slice(1) || '').split('.');
+  const [canal, clave, destino] = (location.hash.slice(1) || '').split('.');
   const T = document.getElementById('t'), M = document.getElementById('m'), B = document.getElementById('b');
   B.onclick = () => location.reload();
   if (!canal || !clave) { T.textContent = 'Link incompleto'; M.textContent = 'Lea de nuevo el QR en la computadora: Herramientas → 🌍 iPad en cualquier lugar.'; return; }
@@ -42,7 +42,7 @@
     // prueba si la computadora está encendida
     const ok = await fetch(url + '/estado', { cache: 'no-store', mode: 'no-cors' }).then(() => true).catch(() => false);
     if (!ok) throw new Error('apagada');
-    location.replace(url + '/pastor?k=' + encodeURIComponent(clave));
+    location.replace(url + '/pastor?k=' + encodeURIComponent(clave) + (destino === 'telao' ? '&ir=telao' : ''));
   } catch (e) {
     T.textContent = 'La computadora no responde';
     M.textContent = 'Verifique que la computadora esté encendida, con internet y con UniversaApp abierto (Herramientas → 🌍 iPad en cualquier lugar: Ligado).';
