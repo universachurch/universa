@@ -42,7 +42,7 @@
     // prueba si la computadora está encendida
     const ok = await fetch(url + '/estado', { cache: 'no-store', mode: 'no-cors' }).then(() => true).catch(() => false);
     if (!ok) throw new Error('apagada');
-    location.replace(url + '/pastor?k=' + encodeURIComponent(clave) + (destino === 'telao' ? '&ir=telao' : ''));
+    location.replace(url + (destino === 'telao' ? '/telao' : '/pastor') + '?k=' + encodeURIComponent(clave));
   } catch (e) {
     T.textContent = 'La computadora no responde';
     M.textContent = 'Verifique que la computadora esté encendida, con internet y con UniversaApp abierto (Herramientas → 🌍 iPad en cualquier lugar: Ligado).';
