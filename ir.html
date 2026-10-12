@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="UniversaApp">
+<meta name="referrer" content="no-referrer">
+<link rel="apple-touch-icon" href="icon.png">
+<title>UniversaApp · Pastor</title>
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #0b0d14; color: #eef; font: 17px/1.45 -apple-system, system-ui, sans-serif; text-align: center; padding: 16px; box-sizing: border-box; }
+  img { width: 84px; height: 84px; border-radius: 20px; }
+  h1 { font-size: 22px; margin: 14px 0 6px; }
+  p { opacity: .8; max-width: 420px; margin: 6px auto; }
+  button { margin-top: 16px; font: inherit; font-weight: 700; padding: 12px 22px; border-radius: 12px; border: 0; background: #3d6bff; color: #fff; }
+</style>
+</head>
+<body>
+<main>
+  <img src="icon.png" alt="">
+  <h1 id="t">Conectando con la computadora…</h1>
+  <p id="m"></p>
+  <button id="b" hidden>Intentar de nuevo</button>
+</main>
+<script>
+// El link es: ir.html#CANAL.CLAVE  — lo de después de # nunca sale del iPad hacia este sitio.
+// 1) lee en el canal secreto la dirección actual de la computadora  2) entra con la clave.
+(async function ir() {
+  const [canal, clave] = (location.hash.slice(1) || '').split('.');
+  const T = document.getElementById('t'), M = document.getElementById('m'), B = document.getElementById('b');
+  B.onclick = () => location.reload();
+  if (!canal || !clave) { T.textContent = 'Link incompleto'; M.textContent = 'Lea de nuevo el QR en la computadora: Herramientas → 🌍 iPad en cualquier lugar.'; return; }
+  try { localStorage.setItem('ua-ir', location.hash); } catch {}
+  try {
+    const r = await fetch('https://ntfy.sh/' + encodeURIComponent(canal) + '/json?poll=1&since=all', { cache: 'no-store' });
+    const linhas = (await r.text()).trim().split('\n').map((l) => { try { return JSON.parse(l); } catch { return null; } }).filter((x) => x && x.event === 'message');
+    const ult = linhas.pop();
+    const url = ult && String(ult.message || '').trim();
+    if (!url || !/^https:\/\/[a-z0-9-]+\.trycloudflare\.com$/.test(url)) throw new Error('sin dirección');
+    // prueba si la computadora está encendida
+    const ok = await fetch(url + '/estado', { cache: 'no-store', mode: 'no-cors' }).then(() => true).catch(() => false);
+    if (!ok) throw new Error('apagada');
+    location.replace(url + '/pastor?k=' + encodeURIComponent(clave));
+  } catch (e) {
+    T.textContent = 'La computadora no responde';
+    M.textContent = 'Verifique que la computadora esté encendida, con internet y con UniversaApp abierto (Herramientas → 🌍 iPad en cualquier lugar: Ligado).';
+    B.hidden = false;
+  }
+})();
+</script>
+</body>
+</html>
