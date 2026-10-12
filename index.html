@@ -38,6 +38,46 @@
     --gold: #4fb8ff; --gold-soft: #16204a; --night: #050818; --night-ink: #eef0f8; --live: #ff4d5e; color-scheme: dark;
   }
   * { box-sizing: border-box; }
+  /* ===== demo animada: pastor en el púlpito + operador ===== */
+  .demo { position: relative; display: flex; flex-direction: column; gap: 14px; }
+  .d-pantalla { aspect-ratio: 16 / 9; border-radius: 16px; background: radial-gradient(120% 90% at 30% 10%, #1c2a7a 0%, var(--night) 62%); color: var(--night-ink); position: relative; display: grid; place-items: center; text-align: center; padding: 6%; border: 3px solid #0a0c18; box-shadow: 0 30px 60px rgba(10,12,40,.35); overflow: hidden; transition: background .8s; }
+  .d-pantalla.oracion { background: radial-gradient(120% 90% at 50% 40%, #2a1a5e 0%, #090616 70%); }
+  .d-pantalla .aire { position: absolute; top: 10px; left: 12px; font-size: 10px; font-weight: 800; letter-spacing: .08em; background: var(--live); color: #fff; padding: 3px 7px; border-radius: 6px; }
+  .d-cont { transition: opacity .45s, transform .45s; }
+  .d-cont.fora { opacity: 0; transform: translateY(8px); }
+  .d-cont h4 { margin: 0 0 8px; font-family: var(--display); font-size: clamp(22px, 3.4vw, 38px); font-weight: 800; line-height: 1.1; }
+  .d-cont p { margin: 0; font-size: clamp(13px, 1.6vw, 17px); opacity: .85; line-height: 1.4; }
+  .d-notas { font-size: 20px; letter-spacing: 6px; animation: flota 2s ease-in-out infinite; }
+  @keyframes flota { 50% { transform: translateY(-6px); opacity: .6; } }
+  .d-abajo { display: grid; grid-template-columns: 1.25fr 1fr; gap: 14px; align-items: end; }
+  .d-pulpito { position: relative; height: 170px; }
+  .d-pastor { position: absolute; left: 58%; bottom: 62px; transform: translateX(-50%); width: 90px; height: 110px; }
+  .d-pastor .cab { position: absolute; left: 31px; top: 0; width: 28px; height: 28px; border-radius: 50%; background: #c8936a; }
+  .d-pastor .cuerpo { position: absolute; left: 10px; top: 30px; width: 70px; height: 80px; border-radius: 30px 30px 6px 6px; background: #1f2a55; }
+  .d-atril { position: absolute; left: 58%; bottom: 0; transform: translateX(-50%); width: 150px; height: 70px; border-radius: 10px 10px 4px 4px; background: linear-gradient(#7a4a2a, #5a341c); display: grid; place-items: end center; padding-bottom: 6px; }
+  .d-atril b { font-size: 10px; color: #f3dcc4; letter-spacing: .1em; text-transform: uppercase; opacity: .8; }
+  .d-ipad { position: absolute; left: 58%; bottom: 52px; transform: translateX(-50%) rotate(-4deg); width: 120px; background: #111; border-radius: 10px; padding: 6px; box-shadow: 0 10px 22px rgba(0,0,0,.35); z-index: 2; }
+  .d-ipad small { display: block; font-size: 8px; color: #9aa2c2; text-align: center; margin-bottom: 4px; }
+  .d-bt { background: linear-gradient(120deg, #3d6bff, #a23dff); color: #fff; font-size: 10.5px; font-weight: 800; text-align: center; padding: 8px 4px; border-radius: 7px; transition: transform .15s, background .3s; }
+  .d-bt.toca { transform: scale(.92); }
+  .d-dedo { position: absolute; right: 12px; bottom: 6px; width: 16px; height: 16px; border-radius: 50%; background: rgba(255,255,255,.85); box-shadow: 0 0 0 0 rgba(255,255,255,.7); opacity: 0; }
+  .d-dedo.toca { animation: toque .7s ease-out; }
+  @keyframes toque { 0% { opacity: 1; box-shadow: 0 0 0 0 rgba(255,255,255,.7); } 100% { opacity: 0; box-shadow: 0 0 0 18px rgba(255,255,255,0); } }
+  .d-voz { position: absolute; left: 0; top: 4px; max-width: 40%; z-index: 3; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 14px 14px 14px 4px; padding: 7px 10px; font-size: 12.5px; box-shadow: 0 8px 20px rgba(20,20,60,.12); opacity: 0; transform: translateY(6px); transition: opacity .35s, transform .35s; }
+  .d-voz.ve { opacity: 1; transform: none; }
+  .d-voz b { color: var(--gold); }
+  .d-pc { text-align: center; }
+  .d-lap { margin: 0 auto; width: 92%; aspect-ratio: 16 / 10; background: #111; border-radius: 8px 8px 0 0; padding: 6px; }
+  .d-mini { width: 100%; height: 100%; border-radius: 3px; background: radial-gradient(120% 90% at 30% 10%, #1c2a7a 0%, var(--night) 62%); color: #eef0f8; display: grid; place-items: center; font-size: 10px; font-weight: 800; padding: 4px; line-height: 1.2; transition: background .8s; }
+  .d-mini.oracion { background: radial-gradient(120% 90% at 50% 40%, #2a1a5e 0%, #090616 70%); }
+  .d-base { width: 100%; height: 8px; background: #2a2e40; border-radius: 0 0 8px 8px; }
+  .d-pc small { display: block; margin-top: 6px; font-size: 12px; font-weight: 700; color: var(--ink); line-height: 1.3; }
+  .d-pc small span { font-weight: 500; color: var(--muted); }
+  .d-caption { margin: 0; min-height: 3em; font-size: 15px; font-weight: 700; color: var(--ink); border-left: 4px solid var(--gold); padding-left: 12px; transition: opacity .4s; }
+  .d-caption em { font-style: normal; color: var(--gold); }
+  @media (max-width: 560px) { .d-abajo { grid-template-columns: 1fr; } .d-pc { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .d-cont, .d-voz, .d-caption { transition: none; } .d-notas, .d-dedo.toca { animation: none; } }
+
   body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.55; padding-inline: 20px; }
   .wrap { max-width: 1120px; margin: 0 auto; }
   h1, h2, h3 { font-family: var(--display); line-height: 1.05; text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
@@ -172,32 +212,38 @@
 
   <header class="hero" id="inicio">
     <div>
-      <p class="eyebrow">Para el pastor · Mac, Windows, iPad, iPhone y Android</p>
-      <h1>Pastor, dirija todo el culto <em>desde el iPad</em>.</h1>
-      <p class="lead">Sin operador. Usted en el púlpito con el iPad en la mano: la letra, la Biblia, las pistas y el fondo de oración. Y cuando cita un versículo, el programa lo escucha y lo pone en la pantalla.</p>
+      <p class="eyebrow">Pastor, esto es para usted</p>
+      <h1>¿Cansado de que el culto no salga <em>como usted quiere</em>?</h1>
+      <p class="lead"><b>Llegó UniversaApp.</b> Usted dirige todo desde el iPad en el púlpito: la alabanza, la Biblia, la oración y la ofrenda. Con operador o sin operador, el culto sale como usted lo pensó.</p>
       <div class="ctas">
-        <a class="btn solid" href="#descargar">Descargar gratis</a>
-        <a class="btn" href="#pastor">Ver cómo funciona</a>
+        <a class="btn solid" href="#descargar">Listo para usted, pastor · Descargar gratis</a>
       </div>
-      <p class="nota">Gratis de verdad: sin tarjeta y sin prueba que se vence.</p>
+      <p class="nota">Gratis. Mac, Windows, iPad, iPhone y Android.</p>
     </div>
 
-    <div class="escena" aria-label="Ejemplo: el pastor cita un versículo y aparece en la pantalla y en el celular">
-      <div class="pulpito">
-        <div class="mic" aria-hidden="true">🎙</div>
-        <div class="dice" id="dice">"…abran sus Biblias en <b>Juan 3:16</b>"</div>
-      </div>
-      <div class="pantalla">
+    <div class="demo" aria-label="Animación: el pastor toca el iPad en el púlpito y la pantalla de la iglesia cambia; el operador ve lo mismo en la computadora">
+      <div class="d-pantalla">
         <span class="aire">EN VIVO</span>
-        <div class="paso" id="ref"><div class="ref">Juan 3:16</div></div>
-        <div class="lineas paso" id="lineas" aria-hidden="true"><span style="width:96%"></span><span style="width:88%"></span><span style="width:92%"></span><span style="width:60%"></span></div>
-        <div class="pie">RVR 1909</div>
+        <div class="d-cont" id="dCont"></div>
       </div>
-      <div class="telefono" aria-hidden="true">
-        <small id="idioma">EN SU CELULAR</small>
-        <div class="es" id="traduce">Juan 3:16</div>
-        <span style="width:95%"></span><span style="width:80%"></span><span style="width:88%"></span><span style="width:55%"></span>
+      <div class="d-abajo">
+        <div class="d-pulpito">
+          <div class="d-pastor" aria-hidden="true"><i class="cab"></i><i class="cuerpo"></i></div>
+          <div class="d-ipad">
+            <small>iPad del pastor</small>
+            <div class="d-bt" id="dBt">▶ Parte siguiente</div>
+            <i class="d-dedo" id="dDedo"></i>
+          </div>
+          <div class="d-atril"><b>Púlpito</b></div>
+          <div class="d-voz" id="dVoz"></div>
+        </div>
+        <div class="d-pc">
+          <div class="d-lap"><div class="d-mini" id="dMini"></div></div>
+          <div class="d-base"></div>
+          <small>Operador en la PC o Mac<br><span>si lo tiene · ve lo mismo</span></small>
+        </div>
       </div>
+      <p class="d-caption" id="dCap"></p>
     </div>
   </header>
 
@@ -369,7 +415,7 @@
 
   <div class="final" id="descargar">
     <div>
-      <h2>Pastor, su próximo domingo sin operador.</h2>
+      <h2>Este domingo, el culto como usted lo quiere.</h2>
       <p>Gratis, con todas las funciones. Sin tarjeta.</p>
     </div>
     <div class="sistemas">
@@ -386,28 +432,42 @@
 </div>
 
 <script>
-  // Pequeña escena: el pastor habla, el versículo aparece, el celular traduce.
+  // Escena: el pastor toca el iPad en el púlpito y la pantalla cambia; el operador ve lo mismo.
   (() => {
-    const frases = [
-      { dice: '"…abran sus Biblias en <b>Juan 3:16</b>"', ref: 'Juan 3:16' },
-      { dice: '"…leamos <b>Salmos 23</b>, versículo 1"', ref: 'Salmos 23:1' },
-      { dice: '"…en <b>Romanos 8, 28</b> dice…"', ref: 'Romanos 8:28' },
-      { dice: '"…busquen <b>Filipenses 4:13</b>"', ref: 'Filipenses 4:13' },
-    ];
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    let i = 0;
     const $ = (id) => document.getElementById(id);
-    setInterval(() => {
-      i = (i + 1) % frases.length;
-      const f = frases[i];
-      $('ref').style.opacity = 0; $('lineas').style.opacity = 0;
-      $('dice').innerHTML = f.dice;
+    const pasos = [
+      { bt: '▶ Parte siguiente', tela: '<h4>Santo, santo, santo</h4><p>Señor omnipotente</p><div class="d-notas">♪ ♫ ♪</div>', mini: 'Santo, santo, santo', cap: 'Un toque: <em>entra la alabanza</em> con su pista y la letra sigue la música sola.' },
+      { bt: '🙏 Orar', tela: '<div class="d-notas" style="font-size:26px">🙏</div><p>Fondo de oración</p>', mini: '🙏', ora: true, cap: 'Un toque: <em>fondo de oración</em> que entra bajito. Otro toque y se apaga suave.' },
+      { voz: '"…abran sus Biblias en <b>Juan 3:16</b>"', tela: '<h4>Juan 3:16</h4><p>Porque de tal manera amó Dios al mundo…</p>', mini: 'Juan 3:16', cap: 'Usted cita el versículo: <em>aparece solo</em>. Sin tocar nada.' },
+      { bt: '⚡ Ofrenda', tela: '<h4>Diezmos y Ofrendas</h4><p>♪ alabanza de fondo</p>', mini: 'Ofrenda', cap: 'Un atajo: <em>texto en pantalla y música</em> al mismo tiempo.' },
+    ];
+    let i = -1;
+    const mostrar = (p) => {
+      $('dCont').classList.add('fora');
       setTimeout(() => {
-        $('ref').innerHTML = '<div class="ref">' + f.ref + '</div>';
-        $('traduce').textContent = f.ref;
-        $('ref').style.opacity = 1; $('lineas').style.opacity = 1;
-      }, 900);
-    }, 3800);
+        $('dCont').innerHTML = p.tela; $('dCont').classList.remove('fora');
+        $('dMini').textContent = p.mini;
+        document.querySelector('.d-pantalla').classList.toggle('oracion', !!p.ora);
+        $('dMini').classList.toggle('oracion', !!p.ora);
+      }, 420);
+      $('dCap').innerHTML = p.cap;
+    };
+    const tick = () => {
+      i = (i + 1) % pasos.length;
+      const p = pasos[i];
+      $('dVoz').classList.remove('ve');
+      if (p.voz) {
+        $('dVoz').innerHTML = p.voz; $('dVoz').classList.add('ve');
+        setTimeout(() => mostrar(p), 1200);
+      } else {
+        $('dBt').textContent = p.bt;
+        setTimeout(() => { $('dBt').classList.add('toca'); $('dDedo').classList.remove('toca'); void $('dDedo').offsetWidth; $('dDedo').classList.add('toca'); }, 600);
+        setTimeout(() => { $('dBt').classList.remove('toca'); mostrar(p); }, 800);
+      }
+    };
+    tick();
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    setInterval(tick, 4200);
   })();
 </script>
 
